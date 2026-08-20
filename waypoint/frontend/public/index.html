@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waypoint — plan your next skill</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="contours" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">&#9670;</span>
+      <span class="brand-name">Waypoint</span>
+    </div>
+    <p class="tagline">a trail map for the skills you're building</p>
+    <div id="conn-status" class="conn-status" role="status">checking trail conditions&hellip;</div>
+  </header>
+
+  <main>
+    <section class="panel map-panel" aria-labelledby="map-heading">
+      <div class="panel-head">
+        <h1 id="map-heading">The trail map</h1>
+        <p class="panel-sub">Every skill in the system, and what leads to what. Drag a marker to explore.</p>
+      </div>
+      <div id="graph-empty" class="empty-state" hidden>
+        <p>The map hasn't loaded. Is the graph database reachable?</p>
+      </div>
+      <div id="graph-loading" class="loading-state">
+        <p>Surveying the terrain&hellip;</p>
+      </div>
+      <svg id="graph-svg" hidden></svg>
+      <ul id="legend" class="legend" aria-hidden="true"></ul>
+    </section>
+
+    <section class="panel route-panel" aria-labelledby="route-heading">
+      <div class="panel-head">
+        <h2 id="route-heading">Plan a route</h2>
+        <p class="panel-sub">Pick a hiker and a summit. We'll lay out the waypoints between them.</p>
+      </div>
+
+      <form id="route-form" class="route-form">
+        <label>
+          <span>Hiker</span>
+          <select id="learner-select" required>
+            <option value="" disabled selected>Choose a learner&hellip;</option>
+          </select>
+        </label>
+        <label>
+          <span>Summit (target skill)</span>
+          <select id="skill-select" required>
+            <option value="" disabled selected>Choose a skill&hellip;</option>
+          </select>
+        </label>
+        <button type="submit">Chart the route</button>
+      </form>
+
+      <div id="route-result" class="route-result" aria-live="polite"></div>
+    </section>
+
+    <section class="panel side-by-side">
+      <div class="panel-half" aria-labelledby="recommend-heading">
+        <div class="panel-head">
+          <h2 id="recommend-heading">Trailheads ahead</h2>
+          <p class="panel-sub">Skills this hiker is ready for right now, ranked by how much ground they open up.</p>
+        </div>
+        <ul id="recommend-list" class="card-list"></ul>
+      </div>
+
+      <div class="panel-half" aria-labelledby="peers-heading">
+        <div class="panel-head">
+          <h2 id="peers-heading">Fellow hikers</h2>
+          <p class="panel-sub">Learners on an overlapping trail — good people to pair up with.</p>
+        </div>
+        <ul id="peers-list" class="card-list"></ul>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="learner-heading">
+      <div class="panel-head">
+        <h2 id="learner-heading">Hiker profile</h2>
+        <p class="panel-sub">What this learner already knows, and what's in progress.</p>
+      </div>
+      <div id="learner-detail" class="learner-detail"></div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
